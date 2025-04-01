@@ -1,0 +1,18 @@
+{
+  "name": "lnk_backend",
+  "version": "1.0.0",
+  "description": "URL shortening service",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node index.js"
+  },
+  "author": "anirudhpk01",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "pg": "^8.14.1"
+  }
+}
