@@ -1,18 +1,14 @@
 {
-  "name": "lnk_backend",
+  "name": "url-shortener-redis",
   "version": "1.0.0",
-  "description": "URL shortening service",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "node index.js"
+    "start": "node index.js"
   },
-  "author": "anirudhpk01",
-  "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^5.1.0",
-    "pg": "^8.14.1"
+    "express": "^4.18.2",
+    "nanoid": "^4.0.2",
+    "redis": "^4.6.7"
   }
 }
