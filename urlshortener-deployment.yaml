@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: urlshortener
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: urlshortener
+  template:
+    metadata:
+      labels:
+        app: urlshortener
+    spec:
+      containers:
+      - name: urlshortener
+        image: pes1ug22cs082/urlshortener:latest # Replace this
+        ports:
+        - containerPort: 3000
+        env:
+        - name: REDIS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: urlshortener-config
+              key: redis_url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: urlshortener-service
+spec:
+  selector:
+    app: urlshortener
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: NodePort # Or LoadBalancer if you're on a cloud provider

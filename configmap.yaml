@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: urlshortener-config
+data:
+  redis_url: redis://redis-service:6379

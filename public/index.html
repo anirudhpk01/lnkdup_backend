@@ -75,7 +75,7 @@
       }
 
       try {
-        const res = await fetch('http://localhost:3000/api/upload', {
+        const res = await fetch('/api/upload', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ link })
@@ -84,7 +84,7 @@
         const data = await res.json();
 
         if (data.short_url) {
-          const shortLink = `http://localhost:3000/${data.short_url}`;
+          const shortLink = `http://127.0.0.1:65002/${data.short_url}`;
           resultDiv.innerHTML = `Short URL: <a href="${shortLink}" target="_blank">${shortLink}</a>`;
         } else {
           resultDiv.textContent = data.error || 'Something went wrong.';
