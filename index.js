@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const { createClient } = require('redis');
 
-let nanoid; // placeholder
+let nanoid; // define it in outer scope
 
 // Dynamically import nanoid at runtime
 (async () => {
@@ -11,7 +11,7 @@ let nanoid; // placeholder
 })();
 
 const app = express();
-const port = 80;
+const port = 3000;
 
 app.use(cors({ origin: '*' }));
 app.use(express.json());
@@ -21,14 +21,22 @@ const redisClient = createClient({
   url: 'redis://redis-service:6379'
 });
 
-
 redisClient.on('error', err => console.error('Redis Client Error', err));
-redisClient.connect();
+
+// Ensure Redis client connects properly
+(async () => {
+  try {
+    await redisClient.connect();
+    console.log('✅ Redis client connected successfully');
+  } catch (err) {
+    console.error('❌ Failed to connect to Redis:', err);
+    process.exit(1); // Exit the process if Redis connection fails
+  }
+})();
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html');
-  });
-  
+  res.sendFile(__dirname + '/public/index.html');
+});
 
 // POST /api/upload
 app.post('/api/upload', async (req, res) => {
@@ -45,7 +53,7 @@ app.post('/api/upload', async (req, res) => {
 
   const existingShort = await redisClient.get(`long:${link}`);
   if (existingShort) {
-    console.log("Yes, it already exists!")
+    console.log('✅ Link already shortened:', existingShort);
     return res.status(200).json({ short_url: existingShort });
   }
 
@@ -68,6 +76,6 @@ app.get('/:short_url', async (req, res) => {
   res.status(404).send('URL not found');
 });
 
-app.listen(port,'0.0.0.0', () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`🚀 App listening at http://0.0.0.0:${port}`);
 });
