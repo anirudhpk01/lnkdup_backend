@@ -7,9 +7,9 @@ Steps to run:
 3. Build the docker image
 docker build -t urlshortener-app .
 4. Tag the image for DockerHub
-docker tag urlshortener:latest <your-dockerhub-username>/urlshortener:latest
+docker tag urlshortener:latest your-dockerhub-username/urlshortener:latest
 5. Push the image to DockerHub
-docker push urlshortener:latest
+docker push your-dockerhub-username/urlshortener:latest
 (If things don't work:
 kubectl set image deployment/urlshortener urlshortener=<your-dockerhub-username>/urlshortener:latest
 kubectl rollout restart deployment/urlshortener
