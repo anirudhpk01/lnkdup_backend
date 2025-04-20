@@ -12,7 +12,9 @@ docker tag urlshortener:latest your-dockerhub-username/urlshortener:latest
 docker push your-dockerhub-username/urlshortener:latest
 (If things don't work:
 kubectl set image deployment/urlshortener urlshortener=<your-dockerhub-username>/urlshortener:latest
+
 kubectl rollout restart deployment/urlshortener
+
 kubectl logs <pod-name>
 )
 Apply Kubernetes configs:
