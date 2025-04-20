@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: urlshortener-config
 data:
-  redis_url: redis://redis-service:6379
+  redis_url: redis://redis:6379

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: urlshortener
-        image: pes1ug22cs082/urlshortener:latest # Replace this
+        image: pes1ug22cs082/urlshortener:latest  # Replace this
         ports:
         - containerPort: 3000
         env:
@@ -23,6 +23,13 @@ spec:
             configMapKeyRef:
               name: urlshortener-config
               key: redis_url
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
 ---
 apiVersion: v1
 kind: Service
@@ -35,4 +42,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 3000
-  type: NodePort # Or LoadBalancer if you're on a cloud provider
+  type: NodePort  # Or LoadBalancer if you're on a cloud provider

@@ -3,10 +3,9 @@ kind: Service
 metadata:
   name: urlshortener-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: urlshortener
   ports:
-    - port: 80           # Port on the service
-      targetPort: 3000   # Port your container listens on
-      nodePort: 30918    # Optional. If not set, Kubernetes picks one in 30000-32767
+    - port: 80
+      targetPort: 3000
