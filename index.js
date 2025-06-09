@@ -52,13 +52,13 @@ app.post('/api/upload', async (req,res) => {
     // console.log(link);
     //First we generate a random 5 letter string and then we check if its there in db, if not add to db along with the actual link. If there then rerun the random string part
     let randomString = generateString();
-    let checkQuery = `SELECT * FROM urls WHERE short_url = '${randomString}'`;
-    let checkResult = await pool.query(checkQuery);
+    let checkQuery = `SELECT * FROM urls WHERE short_url = $1`;
+    let checkResult = await pool.query(checkQuery, [randomString]);
     if (checkResult.rows.length > 0){
         // console.log("Already present in db, rerun the random string part")
         randomString = generateString();
     }
-    await pool.query(`INSERT INTO urls (short_url, long_url) VALUES ('${randomString}', '${link}')`)
+    await pool.query(`INSERT INTO urls (short_url, long_url) VALUES ($1, $2)`, [randomString, link])
     .then(result => {
         // console.log("Inserted into db")
         res.status(200).json({short_url: randomString});
@@ -74,8 +74,8 @@ app.post('/api/upload', async (req,res) => {
 app.get('/:short_url', async (req, res) => {
     const { short_url } = req.params;
     // console.log(short_url);
-    const query = `SELECT long_url FROM urls WHERE short_url = '${short_url}'`;
-    pool.query(query)
+    const query = `SELECT long_url FROM urls WHERE short_url = $1`;
+    pool.query(query, [short_url])
         .then(result => {
             if (result.rows.length > 0) {
                 res.status(200).json({ long_url: result.rows[0].long_url });
